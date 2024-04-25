@@ -20,7 +20,8 @@ html {
 }
 
 h1,
-li {
+li,
+input {
   color: #000000;
 }
 
@@ -64,11 +65,9 @@ li {
 .ulli {
   display: flex;
   /* margin-left: 25%; */
-  justify-content: center;
   justify-self: center;
   width: 100%;
   padding: 10px;
-  width: 50%;
 }
 
 .add {
@@ -103,9 +102,13 @@ li {
   border-radius: 3rem 3rem 3rem 3rem;
   width: 7rem;
   padding: 0.5rem;
-
+  margin: 5px;
   cursor: pointer;
 }
+
+/* span {
+  width: 100%;
+} */
 
 /* editbutton */
 .btnadditem2 {
@@ -128,6 +131,8 @@ li {
 li {
   cursor: pointer;
   list-style-type: none;
+  width: 100%;
+  display: block;
 }
 
 ul li cross:hover {
