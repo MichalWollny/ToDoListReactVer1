@@ -81,12 +81,7 @@ function ToDoList() {
             Add
           </button>
           {/* Clear Button */}
-          <button
-            className="btnadditem1"
-            onClick={() => {
-              clearAll;
-            }}
-          >
+          <button className="btnadditem1" onClick={clearAll}>
             Clear All
           </button>
         </div>
