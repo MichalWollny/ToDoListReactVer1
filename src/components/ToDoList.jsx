@@ -19,28 +19,32 @@ function ToDoList() {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   }
-
-  // function moveTaskUp(index) {
-  //   if (index > 0) {
-  //     const updatedTasks = [...tasks];
-  //     [updatedTasks[index], updatedTasks[index - 1]] = [
-  //       updatedTasks[index - 1],
-  //       updatedTasks[index],
-  //     ];
-  //     setTasks(updatedTasks);
-  //   }
-  // }
-
-  // function moveTaskDown(index) {
-  //   if (index < tasks.length - 1) {
-  //     const updatedTasks = [...tasks];
-  //     [updatedTasks[index], updatedTasks[index + 1]] = [
-  //       updatedTasks[index + 1],
-  //       updatedTasks[index],
-  //     ];
-  //     setTasks(updatedTasks);
-  //   }
-  // }
+  // Clear All
+  function clearAll() {
+    setTasks([]);
+  }
+  // Move Up
+  function moveTaskUp(index) {
+    if (index > 0) {
+      const updatedTasks = [...tasks];
+      [updatedTasks[index], updatedTasks[index - 1]] = [
+        updatedTasks[index - 1],
+        updatedTasks[index],
+      ];
+      setTasks(updatedTasks);
+    }
+  }
+  // Move Down
+  function moveTaskDown(index) {
+    if (index < tasks.length - 1) {
+      const updatedTasks = [...tasks];
+      [updatedTasks[index], updatedTasks[index + 1]] = [
+        updatedTasks[index + 1],
+        updatedTasks[index],
+      ];
+      setTasks(updatedTasks);
+    }
+  }
 
   return (
     <div className="to-do-list">
@@ -53,23 +57,31 @@ function ToDoList() {
           value={newTask}
           onChange={handleInputChange}
         />
+        {/* Add Button */}
         <button className="add-button" onClick={addTask}>
           Add
+        </button>
+        {/* Clear Button */}
+        <button className="clear-button" onClick={clearAll}>
+          Clear All
         </button>
       </div>
       <ol>
         {tasks.map((task, index) => (
           <li key={index}>
             <span className="text">{task}</span>
+            {/* Delete Button */}
             <button className="delete-button" onClick={() => deleteTask(index)}>
               Delete
             </button>
-            {/* <button className="move-button" onClick={() => moveTaskUp(index)}>
+            {/* Up Button */}
+            <button className="move-button" onClick={() => moveTaskUp(index)}>
               Up
-            </button> */}
-            {/* <button className="move-button" onClick={() => moveTaskDown(index)}>
+            </button>
+            {/* Down Button */}
+            <button className="move-button" onClick={() => moveTaskDown(index)}>
               Down
-            </button> */}
+            </button>
           </li>
         ))}
       </ol>
