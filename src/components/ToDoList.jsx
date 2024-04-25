@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+// import { Edit } from "./Edit";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [editIndex, setEditIndex] = useState(-1); // Track the index of the task being edited
+  const [editedTask, setEditedTask] = useState("");
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
@@ -23,7 +26,26 @@ function ToDoList() {
   function clearAll() {
     setTasks([]);
   }
+  //   Edit
+  function EditTask(index) {
+    setEditIndex(index);
+    setEditedTask(tasks[index]);
+  }
+
+  // Edit save
+  function SaveEditedTask(index) {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = editedTask;
+    setTasks(updatedTasks);
+    setEditIndex(-1); // Reset edit index
+  }
+  // Edit cansel
+  function CancelEdit() {
+    setEditIndex(-1);
+  }
+
   // Move Up
+
   function moveTaskUp(index) {
     if (index > 0) {
       const updatedTasks = [...tasks];
@@ -34,7 +56,9 @@ function ToDoList() {
       setTasks(updatedTasks);
     }
   }
+
   // Move Down
+
   function moveTaskDown(index) {
     if (index < tasks.length - 1) {
       const updatedTasks = [...tasks];
@@ -63,28 +87,60 @@ function ToDoList() {
         </button>
         {/* Clear Button */}
         <button className="clear-button" onClick={clearAll}>
-          Clear All
+          🆑
         </button>
       </div>
-      <ol>
+      <ul>
+
+        {/*  edit button */}
         {tasks.map((task, index) => (
           <li key={index}>
-            <span className="text">{task}</span>
+            {editIndex === index ? (
+              <input
+                type="text"
+                value={editedTask}
+                onChange={(e) => setEditedTask(e.target.value)}
+              />
+            ) : (
+              <span className="text">{task}</span>
+            )}
+
             {/* Delete Button */}
-            <button className="delete-button" onClick={() => deleteTask(index)}>
+            <button className="barButton " onClick={() => deleteTask(index)}>
               Delete
             </button>
+
+            {/*  edit button */}
+            {editIndex === index ? (
+              <>
+                <button
+                  className="barButton "
+                  onClick={() => SaveEditedTask(index)}
+                >
+                  💾
+                </button>
+                <button className="barButton " onClick={() => CancelEdit()}>
+                  🙅
+                </button>
+              </>
+            ) : (
+              <button className="barButton " onClick={() => EditTask(index)}>
+                Edit
+              </button>
+            )}
+
             {/* Up Button */}
-            <button className="move-button" onClick={() => moveTaskUp(index)}>
-              Up
+            <button className="barButton " onClick={() => moveTaskUp(index)}>
+              👆
             </button>
-            {/* Down Button */}
-            <button className="move-button" onClick={() => moveTaskDown(index)}>
-              Down
+
+            {/* Down Button  */}
+            <button className="barButton " onClick={() => moveTaskDown(index)}>
+              👇
             </button>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   );
 }
