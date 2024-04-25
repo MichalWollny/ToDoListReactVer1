@@ -4,6 +4,8 @@ import Modal from "./Modal/Modal.jsx";
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [editIndex, setEditIndex] = useState(-1); // Track the index of the task being edited
+  const [editedTask, setEditedTask] = useState("");
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
@@ -28,6 +30,25 @@ function ToDoList() {
   function clearAll() {
     setTasks([]);
   }
+
+  //   Edit
+  function EditTask(index) {
+    setEditIndex(index);
+    setEditedTask(tasks[index]);
+  }
+
+  // Edit save
+  function SaveEditedTask(index) {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = editedTask;
+    setTasks(updatedTasks);
+    setEditIndex(-1); // Reset edit index
+  }
+  // Edit cansel
+  function CancelEdit() {
+    setEditIndex(-1);
+  }
+
   // Move Up
   function moveTaskUp(index) {
     if (index > 0) {
@@ -96,13 +117,21 @@ function ToDoList() {
             Clear All
           </button>
         </div>
+
         <div className="ulli">
           <ul className="list-group list-group-flush " id="itemlist">
             {tasks.map((task, index) => (
-              <li key={index} className="list-group-item">
-                <div className="listedTask">
+              <li key={index}>
+                {editIndex === index ? (
+                  <input
+                    type="text"
+                    value={editedTask}
+                    onChange={(e) => setEditedTask(e.target.value)}
+                  />
+                ) : (
                   <span className="text">{task}</span>
-                </div>
+                )}
+
                 <div className="listedTaskButtons">
                   {/* Delete Button */}
                   <button
@@ -111,6 +140,32 @@ function ToDoList() {
                   >
                     ❌
                   </button>
+
+                  {/*  edit button */}
+                  {editIndex === index ? (
+                    <>
+                      <button
+                        className="barButton "
+                        onClick={() => SaveEditedTask(index)}
+                      >
+                        💾
+                      </button>
+                      <button
+                        className="barButton "
+                        onClick={() => CancelEdit()}
+                      >
+                        🙅
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="barButton "
+                      onClick={() => EditTask(index)}
+                    >
+                      Edit
+                    </button>
+                  )}
+
                   {/* Up Button */}
                   <button
                     className="move-button btnadditem1 barButton"
