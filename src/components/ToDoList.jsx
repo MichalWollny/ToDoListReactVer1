@@ -12,8 +12,11 @@ function ToDoList() {
     if (newTask.trim() !== "") {
       setTasks((t) => [...t, newTask]);
       setNewTask("");
+    } else {
+      alert("Mensch schreib doch was...");
     }
   }
+
   // Delete Task
   function deleteTask(index) {
     const updatedTasks = tasks.filter((_, i) => i !== index);
@@ -65,13 +68,25 @@ function ToDoList() {
             placeholder="Enter a task..."
             value={newTask}
             onChange={handleInputChange}
+            // Enter-Key Enabled
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                addTask({ newTask });
+                // e.preventDefault(); not needed
+              }
+            }}
           />
           {/* Add Button */}
           <button className="btnadditem" id="add-btn" onClick={addTask}>
             Add
           </button>
           {/* Clear Button */}
-          <button className="btnadditem1" onClick={clearAll}>
+          <button
+            className="btnadditem1"
+            onClick={() => {
+              clearAll;
+            }}
+          >
             Clear All
           </button>
         </div>
@@ -79,28 +94,32 @@ function ToDoList() {
           <ul className="list-group list-group-flush " id="itemlist">
             {tasks.map((task, index) => (
               <li key={index} className="list-group-item">
-                <span className="text">{task}</span>
-                {/* Delete Button */}
-                <button
-                  className="delete-button btnadditem1"
-                  onClick={() => deleteTask(index)}
-                >
-                  Delete
-                </button>
-                {/* Up Button */}
-                <button
-                  className="move-button btnadditem1"
-                  onClick={() => moveTaskUp(index)}
-                >
-                  Up
-                </button>
-                {/* Down Button */}
-                <button
-                  className="move-button btnadditem1"
-                  onClick={() => moveTaskDown(index)}
-                >
-                  Down
-                </button>
+                <div className="listedTask">
+                  <span className="text">{task}</span>
+                </div>
+                <div className="listedTaskButtons">
+                  {/* Delete Button */}
+                  <button
+                    className="delete-button btnadditem1 barButton"
+                    onClick={() => deleteTask(index)}
+                  >
+                    ❌
+                  </button>
+                  {/* Up Button */}
+                  <button
+                    className="move-button btnadditem1 barButton"
+                    onClick={() => moveTaskUp(index)}
+                  >
+                    👆
+                  </button>
+                  {/* Down Button */}
+                  <button
+                    className="move-button btnadditem1 barButton"
+                    onClick={() => moveTaskDown(index)}
+                  >
+                    👇
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

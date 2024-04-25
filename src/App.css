@@ -68,6 +68,7 @@ input {
   justify-self: center;
   width: 100%;
   padding: 10px;
+  justify-content: center;
 }
 
 .add {
@@ -106,9 +107,13 @@ input {
   cursor: pointer;
 }
 
-/* span {
+span {
   width: 100%;
-} */
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  padding-left: 20px;
+}
 
 /* editbutton */
 .btnadditem2 {
@@ -126,13 +131,41 @@ input {
   line-height: 2rem;
   cursor: pointer;
   list-style-type: "👉";
+
+  /* display: flex;
+  flex-direction: row; */
 }
 
 li {
   cursor: pointer;
   list-style-type: none;
   width: 100%;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  background-color: #47e3b6;
+  border-radius: 25px;
+  margin-bottom: 5px;
+  /* justify-content: center; */
+}
+
+ul {
+  width: 80%;
+}
+.listedTask {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.listedTaskButtons {
+  width: fit-content;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-items: end;
+}
+
+.barButton {
+  width: fit-content;
 }
 
 ul li cross:hover {
