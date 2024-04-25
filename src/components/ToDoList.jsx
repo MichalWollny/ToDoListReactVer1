@@ -12,8 +12,11 @@ function ToDoList() {
     if (newTask.trim() !== "") {
       setTasks((t) => [...t, newTask]);
       setNewTask("");
+    } else {
+      alert("Mensch schreib doch was...");
     }
   }
+
   // Delete Task
   function deleteTask(index) {
     const updatedTasks = tasks.filter((_, i) => i !== index);
@@ -47,44 +50,81 @@ function ToDoList() {
   }
 
   return (
-    <div className="to-do-list">
-      <h1>To-Do-List</h1>
-
-      <div className="toDoList">
-        <input
-          type="text"
-          placeholder="Enter a task..."
-          value={newTask}
-          onChange={handleInputChange}
-        />
-        {/* Add Button */}
-        <button className="add-button" onClick={addTask}>
-          Add
-        </button>
-        {/* Clear Button */}
-        <button className="clear-button" onClick={clearAll}>
-          Clear All
-        </button>
+    <div>
+      <div className="apptodo">
+        <div className="d-flex logoh2">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/006/549/765/non_2x/to-do-list-hand-drawn-doodle-icon-free-vector.jpg"
+            class="imglogo"
+            alt="logo"
+          />
+          <h1>To-Do-List</h1>
+        </div>
+        <div className="inputbtn">
+          <input
+            type="text"
+            className="add"
+            id="add"
+            placeholder="Enter a task..."
+            value={newTask}
+            onChange={handleInputChange}
+            // Enter-Key Enabled
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                addTask({ newTask });
+                // e.preventDefault(); not needed
+              }
+            }}
+          />
+          {/* Add Button */}
+          <button className="btnadditem" id="add-btn" onClick={addTask}>
+            Add
+          </button>
+          {/* Clear Button */}
+          <button
+            className="btnadditem1"
+            onClick={() => {
+              clearAll;
+            }}
+          >
+            Clear All
+          </button>
+        </div>
+        <div className="ulli">
+          <ul className="list-group list-group-flush " id="itemlist">
+            {tasks.map((task, index) => (
+              <li key={index} className="list-group-item">
+                <div className="listedTask">
+                  <span className="text">{task}</span>
+                </div>
+                <div className="listedTaskButtons">
+                  {/* Delete Button */}
+                  <button
+                    className="delete-button btnadditem1 barButton"
+                    onClick={() => deleteTask(index)}
+                  >
+                    ❌
+                  </button>
+                  {/* Up Button */}
+                  <button
+                    className="move-button btnadditem1 barButton"
+                    onClick={() => moveTaskUp(index)}
+                  >
+                    👆
+                  </button>
+                  {/* Down Button */}
+                  <button
+                    className="move-button btnadditem1 barButton"
+                    onClick={() => moveTaskDown(index)}
+                  >
+                    👇
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <ol>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            <span className="text">{task}</span>
-            {/* Delete Button */}
-            <button className="delete-button" onClick={() => deleteTask(index)}>
-              Delete
-            </button>
-            {/* Up Button */}
-            <button className="move-button" onClick={() => moveTaskUp(index)}>
-              Up
-            </button>
-            {/* Down Button */}
-            <button className="move-button" onClick={() => moveTaskDown(index)}>
-              Down
-            </button>
-          </li>
-        ))}
-      </ol>
     </div>
   );
 }
