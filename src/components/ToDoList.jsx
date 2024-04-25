@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "./Modal/Modal.jsx";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -12,9 +13,10 @@ function ToDoList() {
     if (newTask.trim() !== "") {
       setTasks((t) => [...t, newTask]);
       setNewTask("");
-    } else {
-      alert("Mensch schreib doch was...");
     }
+    // else {
+    //   alert("Mensch schreib doch was...");
+    // }
   }
 
   // Delete Task
@@ -77,9 +79,18 @@ function ToDoList() {
             }}
           />
           {/* Add Button */}
-          <button className="btnadditem" id="add-btn" onClick={addTask}>
+          {/* <button className="btnadditem" id="add-btn" onClick={addTask}>
             Add
-          </button>
+          </button> */}
+
+          {tasks.length > 0 ? (
+            <Modal />
+          ) : (
+            <button className="btnadditem1" id="add-btn" onClick={addTask}>
+              Add
+            </button>
+          )}
+
           {/* Clear Button */}
           <button className="btnadditem1" onClick={clearAll}>
             Clear All
