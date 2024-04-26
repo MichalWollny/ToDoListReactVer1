@@ -103,30 +103,21 @@ function ToDoList() {
             }}
           />
           {/* Add Button */}
-          <button className="btnadditem" id="add-btn" onClick={addTask}>
+          {/* <button className="btnadditem" id="add-btn" onClick={addTask}>
             Add
-          </button>
-
-          {/* {newTask == "" ? (
+          </button> */}
+          {tasks.length < 0 ? (
             <Modal />
           ) : (
-            <button className="btnadditem1" id="add-btn" onClick={addTask}>
+            <button className="add-btn" id="btn" onClick={addTask}>
               Add
             </button>
-          )} */}
-          {/* {tasks.length == 0 ? (
-            <Modal />
-          ) : (
-            <button className="btnadditem1" id="add-btn" onClick={addTask}>
-              Add
-            </button>
-          )} */}
-
+          )}{" "}
+          */}
           {/* Clear Button */}
           {/* <button className="btnadditem1" onClick={clearAll}>
             Clear List
           </button> */}
-
           {tasks == [] ? (
             <Modal1 />
           ) : (
@@ -142,6 +133,7 @@ function ToDoList() {
               <li key={index}>
                 {editIndex === index ? (
                   <input
+                    className="inputadd"
                     type="text"
                     value={editedTask}
                     onChange={(e) => setEditedTask(e.target.value)}
@@ -163,13 +155,13 @@ function ToDoList() {
                   {editIndex === index ? (
                     <>
                       <button
-                        className="barButton "
+                        className="btnadditem1 barButton  "
                         onClick={() => SaveEditedTask(index)}
                       >
                         💾
                       </button>
                       <button
-                        className="barButton "
+                        className="btnadditem1 barButton "
                         onClick={() => CancelEdit()}
                       >
                         🙅
@@ -177,10 +169,10 @@ function ToDoList() {
                     </>
                   ) : (
                     <button
-                      className="barButton "
+                      className="btnadditem1 barButton  "
                       onClick={() => EditTask(index)}
                     >
-                      Edit
+                      ✍️
                     </button>
                   )}
 
