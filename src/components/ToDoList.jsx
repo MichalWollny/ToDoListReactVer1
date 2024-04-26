@@ -49,6 +49,9 @@ function ToDoList() {
     setEditIndex(-1);
   }
 
+
+
+
   // Move Up
   function moveTaskUp(index) {
     if (index > 0) {
@@ -71,6 +74,9 @@ function ToDoList() {
       setTasks(updatedTasks);
     }
   }
+
+
+
 
   return (
     <div>
@@ -104,10 +110,10 @@ function ToDoList() {
             Add
           </button> */}
 
-          {tasks.length > 0 ? (
+          {tasks.length < 0 ? (
             <Modal />
           ) : (
-            <button className="btnadditem1" id="add-btn" onClick={addTask}>
+            <button className="add-btn" id="btn" onClick={addTask}>
               Add
             </button>
           )}
@@ -124,6 +130,7 @@ function ToDoList() {
               <li key={index}>
                 {editIndex === index ? (
                   <input
+                    className="inputadd"
                     type="text"
                     value={editedTask}
                     onChange={(e) => setEditedTask(e.target.value)}
@@ -145,13 +152,13 @@ function ToDoList() {
                   {editIndex === index ? (
                     <>
                       <button
-                        className="barButton "
+                        className="btnadditem1 barButton  "
                         onClick={() => SaveEditedTask(index)}
                       >
                         💾
                       </button>
                       <button
-                        className="barButton "
+                        className="btnadditem1 barButton "
                         onClick={() => CancelEdit()}
                       >
                         🙅
@@ -159,12 +166,15 @@ function ToDoList() {
                     </>
                   ) : (
                     <button
-                      className="barButton "
+                      className="btnadditem1 barButton  "
                       onClick={() => EditTask(index)}
                     >
-                      Edit
+                      ✍️
                     </button>
                   )}
+
+
+
 
                   {/* Up Button */}
                   <button
@@ -180,6 +190,8 @@ function ToDoList() {
                   >
                     👇
                   </button>
+
+                  
                 </div>
               </li>
             ))}
