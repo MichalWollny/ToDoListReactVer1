@@ -10,6 +10,7 @@ function ToDoList() {
   const [newTask, setNewTask] = useState("");
   const [editIndex, setEditIndex] = useState(-1); // Track the index of the task being edited
   const [editedTask, setEditedTask] = useState("");
+  const [check, setcheck] = useState([]);
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
@@ -74,7 +75,26 @@ function ToDoList() {
       setTasks(updatedTasks);
     }
   }
-
+  //Check
+  function Checker(index) {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    const Check = tasks.filter((_, i) => i == index);
+    setTasks(updatedTasks);
+    setcheck((t) => [...t, Check]);
+  }
+  // delete Checklist
+  function deleteCheck(index) {
+    const updatedTasks = check.filter((_, i) => i !== index);
+    setcheck(updatedTasks);
+  }
+  // Uncheck Button
+  //Check
+  function UnChecker(index) {
+    const updatedTasks = check.filter((_, i) => i !== index);
+    const Check = check.filter((_, i) => i == index);
+    setcheck(updatedTasks);
+    setTasks((t) => [...t, Check]);
+  }
   return (
     <div>
       <div className="apptodo">
@@ -189,6 +209,48 @@ function ToDoList() {
                     onClick={() => moveTaskDown(index)}
                   >
                     👇
+                  </button>
+                  {/* Check Button */}
+                  <button
+                    className="check-button btnadditem1 barButton"
+                    onClick={() => Checker(index)}
+                  >
+                    ✅
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="ulli">
+          <ul className="list-group list-group-flush" id="itemlist">
+            {check.map((task, index) => (
+              <li className="checked" key={index}>
+                {editIndex === index ? (
+                  <input
+                    className="inputadd"
+                    type="text"
+                    value={editedTask}
+                    onChange={(e) => setEditedTask(e.target.value)}
+                  />
+                ) : (
+                  <span className="text">{task}</span>
+                )}
+
+                <div className="listedTaskButtons">
+                  {/* Uncheck Button */}
+                  <button
+                    className="check-button btnadditem1 barButton"
+                    onClick={() => UnChecker(index)}
+                  >
+                    ⭕
+                  </button>
+                  {/* Delete Button */}
+                  <button
+                    className="delete-button btnadditem1 barButton"
+                    onClick={() => deleteCheck(index)}
+                  >
+                    ❌
                   </button>
                 </div>
               </li>
