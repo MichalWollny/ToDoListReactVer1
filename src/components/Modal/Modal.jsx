@@ -16,9 +16,9 @@ export default function Modal1() {
 
   return (
     <>
-      <button onClick={toggleModal} className="add-btn">
+      {/* <button onClick={toggleModal} className="add-btn">
         Add
-      </button>
+      </button> */}
 
       {modal && (
         <div className="modal">
@@ -42,44 +42,3 @@ export default function Modal1() {
     </>
   );
 }
-
-// export default function Modal2() {
-//   const [modal, setModal] = useState(false);
-//   const toggleModal = () => {
-//     setModal(!modal);
-//   };
-
-//   if (modal) {
-//     document.body.classList.add("active-modal");
-//   } else {
-//     document.body.classList.remove("active-modal");
-//   }
-
-//   return (
-//     <>
-//       <button onClick={toggleModal} className="add-btn">
-//         Clean
-//       </button>
-
-//       {modal && (
-//         <div className="modal">
-//           <div onClick={toggleModal} className="overlay"></div>
-//           <div className="modal-content">
-//             <br />
-
-//             <br />
-//             <img
-//               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR87GI7npiFth1Go4eQaOFhZ1l2PFFg5KLePqjUSru7BmtJrGmElXRBUp2Rmr61ARaI8Gk&usqp=CAU"
-//               alt="WTF Baby"
-//             />
-//             <br />
-//             <h2>Mensch schreib doch was...</h2>
-//             <button className="close-modal" onClick={toggleModal}>
-//               Got It Boss!
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// }

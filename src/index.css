@@ -79,8 +79,6 @@ button:focus-visible {
   }
 }
 
-
-
 #root {
   min-width: 100%;
   margin: 0 auto;
@@ -102,10 +100,18 @@ html {
   font-size: 100%;
 }
 
-h1,
+input {
+  color: #000000;
+}
+
+h1 {
+  color: #000000;
+}
+
 li,
 input {
   color: #000000;
+  background-color: #0ca97c;
 }
 
 .add-btn {
@@ -118,7 +124,6 @@ input {
 }
 
 #add-btn {
-
   border-radius: 0rem 3rem 3rem 3rem 0rem;
   width: 7rem;
   padding: 0.5rem;
@@ -126,9 +131,7 @@ input {
   margin-left: 1em;
 }
 
-
 .inputadd {
-
   width: 20rem;
   border-right: none;
   border-radius: 3rem 0rem 0rem 3rem;
@@ -184,7 +187,6 @@ input {
   background: transparent;
 }
 
-
 /* addbutton */
 .btnadditem {
   border-radius: 0rem 3rem 3rem 0rem;
@@ -211,19 +213,15 @@ span {
   padding-left: 20px;
 }
 
-
-
 .list-group-item ul li cross {
   position: absolute;
   right: 0;
   font-size: 2rem;
   line-height: 2rem;
 
-
   /* display: flex;
   flex-direction: row; */
 }
-
 
 li {
   cursor: pointer;
