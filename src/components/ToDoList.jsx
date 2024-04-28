@@ -33,6 +33,7 @@ function ToDoList() {
     } else {
       setTasks([]);
     }
+    setcheck([]);
   }
 
   //   Edit
@@ -129,8 +130,7 @@ function ToDoList() {
           <button
             className="btnadditem"
             id="add-btn btnadditem"
-            onClick={addTask}
-          >
+            onClick={addTask}>
             Add
           </button>
 
@@ -161,22 +161,19 @@ function ToDoList() {
                     <>
                       <button
                         className="btnadditem1 barButton"
-                        onClick={() => SaveEditedTask(index)}
-                      >
+                        onClick={() => SaveEditedTask(index)}>
                         💾
                       </button>
                       <button
                         className="btnadditem1 barButton "
-                        onClick={() => CancelEdit()}
-                      >
+                        onClick={() => CancelEdit()}>
                         🙅
                       </button>
                     </>
                   ) : (
                     <button
                       className="btnadditem1 barButton"
-                      onClick={() => EditTask(index)}
-                    >
+                      onClick={() => EditTask(index)}>
                       ✍️
                     </button>
                   )}
@@ -184,30 +181,26 @@ function ToDoList() {
                   {/* Delete Button */}
                   <button
                     className="delete-button btnadditem1 barButton"
-                    onClick={() => deleteTask(index)}
-                  >
+                    onClick={() => deleteTask(index)}>
                     ❌
                   </button>
 
                   {/* Up Button */}
                   <button
                     className="move-button btnadditem1 barButton"
-                    onClick={() => moveTaskUp(index)}
-                  >
+                    onClick={() => moveTaskUp(index)}>
                     👆
                   </button>
                   {/* Down Button */}
                   <button
                     className="move-button btnadditem1 barButton"
-                    onClick={() => moveTaskDown(index)}
-                  >
+                    onClick={() => moveTaskDown(index)}>
                     👇
                   </button>
                   {/* Check Button */}
                   <button
                     className="check-button btnadditem1 barButton"
-                    onClick={() => Checker(index)}
-                  >
+                    onClick={() => Checker(index)}>
                     ✅
                   </button>
                 </div>
@@ -234,15 +227,13 @@ function ToDoList() {
                   {/* Uncheck Button */}
                   <button
                     className="check-button btnadditem1 barButton"
-                    onClick={() => UnChecker(index)}
-                  >
+                    onClick={() => UnChecker(index)}>
                     ⭕
                   </button>
                   {/* Delete Button */}
                   <button
                     className="delete-button btnadditem1 barButton"
-                    onClick={() => deleteCheck(index)}
-                  >
+                    onClick={() => deleteCheck(index)}>
                     ❌
                   </button>
                 </div>
