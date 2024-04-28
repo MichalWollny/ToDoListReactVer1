@@ -1,32 +1,39 @@
 import React, { useState } from "react";
+
+import Modal from "./Modal/Modal";
+
 import "../App.css";
+
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [editIndex, setEditIndex] = useState(-1); // Track the index of the task being edited
+  const [editIndex, setEditIndex] = useState(-1);
   const [editedTask, setEditedTask] = useState("");
   const [check, setcheck] = useState([]);
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
   }
-  // Add Task
+
   function addTask() {
     if (newTask.trim() !== "") {
-      setTasks((t) => [...t, newTask]);
+      setTasks((prevTasks) => [...prevTasks, { text: newTask, checked: false }]);
       setNewTask("");
     } else {
+
+      alert("Please enter a task...");
+
       alert("Mensch schreib doch was...");
+
     }
   }
 
-  // Delete Task
   function deleteTask(index) {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   }
-  // Clear All
+
   function clearAll() {
     if (tasks.length < 1) {
       alert("Ist doch leer Mensch...");
@@ -35,25 +42,22 @@ function ToDoList() {
     }
   }
 
-  //   Edit
-  function EditTask(index) {
+  function editTask(index) {
     setEditIndex(index);
-    setEditedTask(tasks[index]);
+    setEditedTask(tasks[index].text);
   }
 
-  // Edit save
-  function SaveEditedTask(index) {
+  function saveEditedTask(index) {
     const updatedTasks = [...tasks];
-    updatedTasks[index] = editedTask;
+    updatedTasks[index].text = editedTask;
     setTasks(updatedTasks);
-    setEditIndex(-1); // Reset edit index
-  }
-  // Edit cansel
-  function CancelEdit() {
     setEditIndex(-1);
   }
 
-  // Move Up
+  function cancelEdit() {
+    setEditIndex(-1);
+  }
+
   function moveTaskUp(index) {
     if (index > 0) {
       const updatedTasks = [...tasks];
@@ -64,7 +68,7 @@ function ToDoList() {
       setTasks(updatedTasks);
     }
   }
-  // Move Down
+
   function moveTaskDown(index) {
     if (index < tasks.length - 1) {
       const updatedTasks = [...tasks];
@@ -76,12 +80,16 @@ function ToDoList() {
     }
   }
 
+  function toggleCheck(index) {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].checked = !updatedTasks[index].checked;
+
   //Check
   function Checker(index) {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     const Check = tasks.filter((_, i) => i == index);
+
     setTasks(updatedTasks);
-    setcheck((t) => [...t, Check]);
   }
 
   // delete Checklist
@@ -90,15 +98,57 @@ function ToDoList() {
     setcheck(updatedTasks);
   }
 
-  // Uncheck Button
-  //Check
   function UnChecker(index) {
     const updatedTasks = check.filter((_, i) => i !== index);
     const Check = check.filter((_, i) => i == index);
     setcheck(updatedTasks);
     setTasks((t) => [...t, Check]);
   }
+
   return (
+
+    <div className="apptodo">
+      <div className="d-flex logoh2">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/006/549/765/non_2x/to-do-list-hand-drawn-doodle-icon-free-vector.jpg"
+          className="imglogo"
+          alt="logo"
+        />
+        <h1>To-Do-List</h1>
+      </div>
+      <div className="inputbtn">
+        <input
+          type="text"
+          className="add"
+          id="add"
+          placeholder="Enter a task..."
+          value={newTask}
+          onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
+        />
+        {tasks.length > 0 ? (
+          <Modal />
+        ) : (
+          <button className="btnadditem1" onClick={addTask}>
+
+          </button> */}
+
+          {tasks.length < 0 ? (
+            <Modal />
+          ) : (
+            <button className="add-btn" id="btn" onClick={addTask}>
+              Add
+            </button>
+          )}
+
+          {/* Clear Button */}
+          <button className="btnadditem1" onClick={clearAll}>
+            Clear All
+
     <div>
       <div className="apptodo">
         <div className="d-flex logoh2">
@@ -140,11 +190,78 @@ function ToDoList() {
           </button>
         </div>
 
-        <div className="ulli">
-          <ul className="list-group list-group-flush " id="itemlist">
-            {tasks.map((task, index) => (
-              <li key={index}>
+          </button>
+        )}
+        <button className="btnadditem1" onClick={clearAll}>
+          Clear All
+        </button>
+      </div>
+      <div className="ulli">
+        <ul className="list-group list-group-flush" id="itemlist">
+          {tasks.map((task, index) => (
+            <li key={index} style={{ textDecoration: task.checked ? "line-through" : "none" }}>
+              {editIndex === index ? (
+                <input
+                  type="text"
+                  value={editedTask}
+                  onChange={(e) => setEditedTask(e.target.value)}
+                />
+              ) : (
+                <span className="text">{task.text}</span>
+              )}
+              <div className="listedTaskButtons">
+                <button
+                  className="delete-button btnadditem1 barButton"
+                  onClick={() => deleteTask(index)}
+                >
+                  ❌
+                </button>
                 {editIndex === index ? (
+
+                  <>
+                    <button
+                      className="barButton"
+                      onClick={() => saveEditedTask(index)}
+                    >
+                      💾
+                    </button>
+                    <button
+                      className="barButton"
+                      onClick={() => cancelEdit()}
+                    >
+                      🙅
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="barButton"
+                    onClick={() => editTask(index)}
+                  >
+                    Edit
+                  </button>
+                )}
+                <button
+                  className="check barButton"
+                  onClick={() => toggleCheck(index)}
+                >
+                  ✔️
+                </button>
+                <button
+                  className="move-button btnadditem1 barButton"
+                  onClick={() => moveTaskUp(index)}
+                >
+                  👆
+                </button>
+                <button
+                  className="move-button btnadditem1 barButton"
+                  onClick={() => moveTaskDown(index)}
+                >
+                  👇
+                </button>
+              </div>
+            </li>
+          ))}
+
                   <input
                     className="inputadd"
                     type="text"
@@ -250,8 +367,10 @@ function ToDoList() {
             ))}
           </ul>
         </div>
+
       </div>
     </div>
   );
 }
+
 export default ToDoList;
