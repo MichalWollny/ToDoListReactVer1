@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "./Modal/Modal.jsx";
+import "../App.css";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -16,10 +16,9 @@ function ToDoList() {
     if (newTask.trim() !== "") {
       setTasks((t) => [...t, newTask]);
       setNewTask("");
+    } else {
+      alert("Mensch schreib doch was...");
     }
-    // else {
-    //   alert("Mensch schreib doch was...");
-    // }
   }
 
   // Delete Task
@@ -29,7 +28,11 @@ function ToDoList() {
   }
   // Clear All
   function clearAll() {
-    setTasks([]);
+    if (tasks.length < 1) {
+      alert("Ist doch leer Mensch...");
+    } else {
+      setTasks([]);
+    }
   }
 
   //   Edit
@@ -72,6 +75,7 @@ function ToDoList() {
       setTasks(updatedTasks);
     }
   }
+
   //Check
   function Checker(index) {
     const updatedTasks = tasks.filter((_, i) => i !== index);
@@ -79,11 +83,13 @@ function ToDoList() {
     setTasks(updatedTasks);
     setcheck((t) => [...t, Check]);
   }
+
   // delete Checklist
   function deleteCheck(index) {
     const updatedTasks = check.filter((_, i) => i !== index);
     setcheck(updatedTasks);
   }
+
   // Uncheck Button
   //Check
   function UnChecker(index) {
@@ -120,21 +126,17 @@ function ToDoList() {
             }}
           />
           {/* Add Button */}
-          {/* <button className="btnadditem" id="add-btn" onClick={addTask}>
+          <button
+            className="btnadditem"
+            id="add-btn btnadditem"
+            onClick={addTask}
+          >
             Add
-          </button> */}
-
-          {tasks.length < 0 ? (
-            <Modal />
-          ) : (
-            <button className="add-btn" id="btn" onClick={addTask}>
-              Add
-            </button>
-          )}
+          </button>
 
           {/* Clear Button */}
           <button className="btnadditem1" onClick={clearAll}>
-            Clear All
+            Clear List
           </button>
         </div>
 
@@ -154,51 +156,58 @@ function ToDoList() {
                 )}
 
                 <div className="listedTaskButtons">
-                  {/* Delete Button */}
-                  <button
-                    className="delete-button btnadditem1 barButton"
-                    onClick={() => deleteTask(index)}>
-                    ❌
-                  </button>
-
                   {/*  edit button */}
                   {editIndex === index ? (
                     <>
                       <button
-                        className="btnadditem1 barButton  "
-                        onClick={() => SaveEditedTask(index)}>
+                        className="btnadditem1 barButton"
+                        onClick={() => SaveEditedTask(index)}
+                      >
                         💾
                       </button>
                       <button
                         className="btnadditem1 barButton "
-                        onClick={() => CancelEdit()}>
+                        onClick={() => CancelEdit()}
+                      >
                         🙅
                       </button>
                     </>
                   ) : (
                     <button
-                      className="btnadditem1 barButton  "
-                      onClick={() => EditTask(index)}>
+                      className="btnadditem1 barButton"
+                      onClick={() => EditTask(index)}
+                    >
                       ✍️
                     </button>
                   )}
 
+                  {/* Delete Button */}
+                  <button
+                    className="delete-button btnadditem1 barButton"
+                    onClick={() => deleteTask(index)}
+                  >
+                    ❌
+                  </button>
+
                   {/* Up Button */}
                   <button
                     className="move-button btnadditem1 barButton"
-                    onClick={() => moveTaskUp(index)}>
+                    onClick={() => moveTaskUp(index)}
+                  >
                     👆
                   </button>
                   {/* Down Button */}
                   <button
                     className="move-button btnadditem1 barButton"
-                    onClick={() => moveTaskDown(index)}>
+                    onClick={() => moveTaskDown(index)}
+                  >
                     👇
                   </button>
                   {/* Check Button */}
                   <button
                     className="check-button btnadditem1 barButton"
-                    onClick={() => Checker(index)}>
+                    onClick={() => Checker(index)}
+                  >
                     ✅
                   </button>
                 </div>
@@ -225,13 +234,15 @@ function ToDoList() {
                   {/* Uncheck Button */}
                   <button
                     className="check-button btnadditem1 barButton"
-                    onClick={() => UnChecker(index)}>
+                    onClick={() => UnChecker(index)}
+                  >
                     ⭕
                   </button>
                   {/* Delete Button */}
                   <button
                     className="delete-button btnadditem1 barButton"
-                    onClick={() => deleteCheck(index)}>
+                    onClick={() => deleteCheck(index)}
+                  >
                     ❌
                   </button>
                 </div>
