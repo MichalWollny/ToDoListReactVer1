@@ -3,16 +3,11 @@ import "./Modal.css";
 import "../../App.css";
 
 export default function Modal() {
-  const [modal, setModal] = useState(false);
-  const toggleModal = () => {
-    setModal(!modal);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
   return (
     <>
@@ -20,7 +15,7 @@ export default function Modal() {
         Add
       </button>
 
-      {modal && (
+      {modalOpen && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
