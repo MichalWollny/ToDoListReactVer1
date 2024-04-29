@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import '../App.css';
+import React, { useState } from "react";
+
+import Modal from "./Modal/Modal";
+
+import "../App.css";
+
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -77,13 +81,69 @@ function ToDoList() {
     setTasks(updatedTasks);
   }
 
+  // delete Checklist
+  function deleteCheck(index) {
+    const updatedTasks = check.filter((_, i) => i !== index);
+    setcheck(updatedTasks);
+  }
+
+  function UnChecker(index) {
+    const updatedTasks = check.filter((_, i) => i !== index);
+    const Check = check.filter((_, i) => i == index);
+    setcheck(updatedTasks);
+    setTasks((t) => [...t, Check]);
+  }
+
   return (
-    <>
+
+    <div className="apptodo">
+      <div className="d-flex logoh2">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/006/549/765/non_2x/to-do-list-hand-drawn-doodle-icon-free-vector.jpg"
+          className="imglogo"
+          alt="logo"
+        />
+        <h1>To-Do-List</h1>
+      </div>
+      <div className="inputbtn">
+        <input
+          type="text"
+          className="add"
+          id="add"
+          placeholder="Enter a task..."
+          value={newTask}
+          onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
+        />
+        {tasks.length > 0 ? (
+          <Modal />
+        ) : (
+          <button className="btnadditem1" onClick={addTask}>
+
+          </button> */}
+
+          {tasks.length < 0 ? (
+            <Modal />
+          ) : (
+            <button className="add-btn" id="btn" onClick={addTask}>
+              Add
+            </button>
+          )}
+
+          {/* Clear Button */}
+          <button className="btnadditem1" onClick={clearAll}>
+            Clear All
+
+    <div>
       <div className="apptodo">
         <div className="d-flex logoh2">
           <img
             src="https://static.vecteezy.com/system/resources/previews/006/549/765/non_2x/to-do-list-hand-drawn-doodle-icon-free-vector.jpg"
-            className="imglogo"
+            class="imglogo"
             alt="logo"
           />
           <h1>To-Do-List</h1>
@@ -96,9 +156,11 @@ function ToDoList() {
             placeholder="Enter a task..."
             value={newTask}
             onChange={handleInputChange}
+            // Enter-Key Enabled
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                addTask();
+              if (e.key === "Enter") {
+                addTask({ newTask });
+                // e.preventDefault(); not needed
               }
             }}
           />
@@ -113,11 +175,51 @@ function ToDoList() {
             Clear List
           </button>
         </div>
-        <div className="ulli">
-          <ul className="list-group list-group-flush" id="itemlist">
-            {tasks.map((task, index) => (
-              <li key={index}>
+
+          </button>
+        )}
+        <button className="btnadditem1" onClick={clearAll}>
+          Clear All
+        </button>
+      </div>
+      <div className="ulli">
+        <ul className="list-group list-group-flush" id="itemlist">
+          {tasks.map((task, index) => (
+            <li key={index} style={{ textDecoration: task.checked ? "line-through" : "none" }}>
+              {editIndex === index ? (
+                <input
+                  type="text"
+                  value={editedTask}
+                  onChange={(e) => setEditedTask(e.target.value)}
+                />
+              ) : (
+                <span className="text">{task.text}</span>
+              )}
+              <div className="listedTaskButtons">
+                <button
+                  className="delete-button btnadditem1 barButton"
+                  onClick={() => deleteTask(index)}
+                >
+                  ❌
+                </button>
                 {editIndex === index ? (
+
+                  <>
+                    <button
+                      className="barButton"
+                      onClick={() => saveEditedTask(index)}
+                    >
+                      💾
+                    </button>
+                    <button
+                      className="barButton"
+                      onClick={() => cancelEdit()}
+                    >
+                      🙅
+                    </button>
+                  </>
+                ) : (
+
                   <input
                     className="inputadd"
                     type="text"

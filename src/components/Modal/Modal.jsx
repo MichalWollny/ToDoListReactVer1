@@ -1,47 +1,144 @@
-import React, { useState } from "react";
-import "./Modal.css";
-import "../../App.css";
+import React, { useState } from 'react';
+import Modal from './Modal/Modal';
+import '../App.css';
 
-<<<<<<< HEAD
-export default function Modal() {
-  const [modalOpen, setModalOpen] = useState(false);
-=======
-export default function Modal1() {
-  const [modal, setModal] = useState(false);
-  const toggleModal = () => {
-    setModal(!modal);
-  };
->>>>>>> cec72f786ebf8502e5ad1f49a5e6a6876cabca33
+function ToDoList() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
+  const [editedTask, setEditedTask] = useState('');
 
-  const toggleModal = () => {
-    setModalOpen(!modalOpen);
-  };
+  function handleInputChange(event) {
+    setNewTask(event.target.value);
+  }
+
+  function addTask() {
+    if (newTask.trim() !== '') {
+      setTasks((t) => [...t, { text: newTask, isChecked: false }]);
+      setNewTask('');
+    } else {
+      alert('Mensch schreib doch was...');
+    }
+  }
+
+  function deleteTask(index) {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  }
+
+  function clearAll() {
+    if (tasks.length < 1) {
+      alert('Ist doch leer Mensch...');
+    } else {
+      setTasks([]);
+    }
+  }
+
+  function editTask(index) {
+    setEditIndex(index);
+    setEditedTask(tasks[index].text);
+  }
+
+  function saveEditedTask(index) {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].text = editedTask;
+    setTasks(updatedTasks);
+    setEditIndex(-1);
+  }
+
+  function cancelEdit() {
+    setEditIndex(-1);
+  }
+
+  function moveTaskUp(index) {
+    if (index > 0) {
+      const updatedTasks = [...tasks];
+      [updatedTasks[index], updatedTasks[index - 1]] = [updatedTasks[index - 1], updatedTasks[index]];
+      setTasks(updatedTasks);
+    }
+  }
+
+  function moveTaskDown(index) {
+    if (index < tasks.length - 1) {
+      const updatedTasks = [...tasks];
+      [updatedTasks[index], updatedTasks[index + 1]] = [updatedTasks[index + 1], updatedTasks[index]];
+      setTasks(updatedTasks);
+    }
+  }
+
+  function toggleCheck(index) {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].isChecked = !updatedTasks[index].isChecked;
+    setTasks(updatedTasks);
+  }
 
   return (
-    <>
-      {/* <button onClick={toggleModal} className="add-btn">
-        Add
-      </button> */}
-
-      {modalOpen && (
-        <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-            <br />
-
-            <br />
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR87GI7npiFth1Go4eQaOFhZ1l2PFFg5KLePqjUSru7BmtJrGmElXRBUp2Rmr61ARaI8Gk&usqp=CAU"
-              alt="WTF Baby"
-            />
-            <br />
-            <h2>Mensch schreib doch was...</h2>
-            <button className="close-modal" onClick={toggleModal}>
-              Got It Boss!
-            </button>
-          </div>
-        </div>
-      )}
-    </>
+    <div className="apptodo">
+      <div className="d-flex logoh2">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/006/549/765/non_2x/to-do-list-hand-drawn-doodle-icon-free-vector.jpg"
+          className="imglogo"
+          alt="logo"
+        />
+        <h1>To-Do-List</h1>
+      </div>
+      <div className="inputbtn">
+        <input
+          type="text"
+          className="add"
+          id="add"
+          placeholder="Enter a task..."
+          value={newTask}
+          onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
+        />
+        <button className="btnadditem" onClick={addTask}>
+          Add
+        </button>
+        <button className="btnadditem1" onClick={clearAll}>
+          Clear List
+        </button>
+      </div>
+      <div className="ulli">
+        <ul className="list-group list-group-flush" id="itemlist">
+          {tasks.map((task, index) => (
+            <li key={index}>
+              {editIndex === index ? (
+                <input
+                  className="inputadd"
+                  type="text"
+                  value={editedTask}
+                  onChange={(e) => setEditedTask(e.target.value)}
+                />
+              ) : (
+                <span className={`text ${task.isChecked ? 'checked' : ''}`}>{task.text}</span>
+              )}
+              <div className="listedTaskButtons">
+                {editIndex === index ? (
+                  <>
+                    <button onClick={() => saveEditedTask(index)}>💾</button>
+                    <button onClick={cancelEdit}>🙅</button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => editTask(index)}>✍️</button>
+                    <button onClick={() => deleteTask(index)}>❌</button>
+                    <button onClick={() => moveTaskUp(index)}>👆</button>
+                    <button onClick={() => moveTaskDown(index)}>👇</button>
+                    <button onClick={() => toggleCheck(index)}>{task.isChecked ? '⭕' : '✅'}</button>
+                  </>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
+
+export default ToDoList;
